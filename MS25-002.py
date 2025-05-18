@@ -57,6 +57,8 @@ def Edit():
         tasks[alter] = prefix + new
 
         with open("Tasks.json", "w") as file:
+
+            #access and stores task alteration by writing into task file
             json.dump({"tasks": tasks}, file, indent=4)
         print("Task updated")
 
