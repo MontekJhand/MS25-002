@@ -5,7 +5,7 @@ import json
 """
 Linked List: Create a linked list to manage tasks. Implement methods for adding, deleting, and traversing tasks.
 Stack: Implement a stack for the undo feature, allowing users to revert the last action.
-Hash Table: Use a hash table to manage and search tasks by tags or keywords.
+Hash Table: Use a hash table to manage and search tasks by tags or keywords.    -> do so as an seperrate task
 """
 #store data in local json file
 import json
@@ -19,7 +19,7 @@ def Add():
         user = input("Enter tasks, when finished enter 'done': ")
         if user == 'done':
             break
-        task.append(f"{count}. {user}")
+        task.append(f"{count}. {user}")     #count is key
         count += 1      #while True count increases by one in order to be incremented per user input for element
 
     tasks = {
@@ -71,15 +71,29 @@ def Undo():
     if tasks:
         removed = tasks.pop()   #access task to remove last element within dict-list
         with open("Tasks.json", "w") as file:
+
+            #write into file to remove a key from a hash table
             json.dump({"tasks": tasks}, file, indent=4)     #serilizes into a properly formated JSON string and writes into file to be written into
     print(f"Latest entry has been undone.")
+
+def Search():
+    search = int(input("Enter a number for the task list you want: ")) - 1
+    with open("Tasks.json", "r") as file:
+        data = json.load(file)
+    my_dict = data["tasks"]     #access arrays that are stored within dict
+
+    if 0 <= search < len(my_dict):
+        task = my_dict[search]
+        print("Task found:")
+        print(task)
 
 def main():
     print("1. To add to tasks")
     print("2. To view tasks")
     print("3. To edit tasks")
     print("4. To delete tasks")
-    print("5. To undo last action\n")
+    print("5. To undo last action")
+    print("6. Search for a task\n")
     choice = int(input("Choose: "))
     
     if choice == 1:
@@ -96,5 +110,8 @@ def main():
     
     elif choice == 5:
         Undo()
+    
+    elif choice == 6:
+        Search()
 
 main()
